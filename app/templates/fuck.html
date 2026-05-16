@@ -1,0 +1,886 @@
+{% extends "base.html" %}
+
+{% block title %}Old Dominion Freight Line Tracking{% endblock %}
+
+{% block style %}
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+    }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -1000px 0;
+        }
+        100% {
+            background-position: 1000px 0;
+        }
+    }
+
+    @keyframes moveTruck {
+        0% {
+            transform: translateX(-10px);
+        }
+        50% {
+            transform: translateX(10px);
+        }
+        100% {
+            transform: translateX(-10px);
+        }
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    body {
+        background: linear-gradient(135deg, #d4e8f0 0%, #ffffff 50%, #e8f4f8 100%);
+        min-height: 100vh;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 20% 50%, rgba(45, 122, 79, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(45, 122, 79, 0.05) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .container {
+        max-width: 100%;
+        margin: 0;
+        padding: 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 40px;
+        animation: fadeInUp 0.8s ease-out;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 20px;
+    }
+
+    .logo {
+        width: 90px;
+        height: 90px;
+        background: linear-gradient(135deg, #2d7a4f 0%, #3a9d63 100%);
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(45, 122, 79, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .logo::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            45deg,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent
+        );
+        transform: rotate(45deg);
+        animation: shimmer 3s infinite;
+    }
+
+    .logo:hover {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 12px 30px rgba(45, 122, 79, 0.4);
+    }
+
+    .logo-text {
+        color: white;
+        font-weight: bold;
+        font-size: 32px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        position: relative;
+        z-index: 1;
+    }
+
+    h1 {
+        color: #333;
+        font-size: 28px;
+        margin-bottom: 20px;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .description {
+        color: #666;
+        font-size: 15px;
+        line-height: 1.8;
+        margin-bottom: 10px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .contact-info {
+        color: #666;
+        font-size: 14px;
+        margin-top: 15px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 20px;
+        display: inline-block;
+        backdrop-filter: blur(10px);
+    }
+
+    .contact-info a {
+        color: #2d7a4f;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        font-weight: 600;
+    }
+
+    .contact-info a:hover {
+        color: #3a9d63;
+    }
+
+    .search-section {
+        background: white;
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        margin-bottom: 35px;
+        animation: fadeInUp 0.8s ease-out 0.2s both;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .search-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #2d7a4f, transparent);
+        animation: shimmer 2s infinite;
+    }
+
+    .search-section:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+
+    .search-label {
+        color: #555;
+        font-size: 15px;
+        margin-bottom: 12px;
+        display: block;
+        font-weight: 600;
+    }
+
+    .search-form {
+        display: flex;
+        gap: 12px;
+        align-items: flex-end;
+        flex-wrap: wrap;
+    }
+
+    .search-form > div {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 14px 18px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background: #fafafa;
+        box-sizing: border-box;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: #2d7a4f;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(45, 122, 79, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .search-button {
+        background: linear-gradient(135deg, #2d7a4f 0%, #1e5a37 100%);
+        color: white;
+        padding: 14px 35px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(45, 122, 79, 0.4);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .search-button::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .search-button:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+
+    .search-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(45, 122, 79, 0.5);
+    }
+
+    .search-button:active {
+        transform: translateY(0);
+    }
+
+    .result-section {
+        background: white;
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        animation: fadeIn 0.6s ease-out;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .result-header {
+        border-bottom: 3px solid #2d7a4f;
+        padding-bottom: 18px;
+        margin-bottom: 28px;
+        animation: slideInRight 0.6s ease-out;
+        position: relative;
+    }
+
+    .result-header::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: #2d7a4f;
+        animation: slideInRight 0.8s ease-out;
+    }
+
+    .result-header h2 {
+        color: #2d7a4f;
+        font-size: 24px;
+        margin-bottom: 8px;
+        font-weight: 700;
+    }
+
+    .tracking-number {
+        color: #666;
+        font-size: 15px;
+    }
+
+    .tracking-number strong {
+        color: #333;
+        font-weight: 700;
+        background: linear-gradient(135deg, #e8f5ed 0%, #d4ebe0 100%);
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-family: 'Courier New', monospace;
+    }
+
+    .section-title {
+        color: #2d7a4f;
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .section-title:before {
+        content: '';
+        width: 4px;
+        height: 24px;
+        background: linear-gradient(135deg, #2d7a4f 0%, #3a9d63 100%);
+        border-radius: 2px;
+    }
+
+    /* Vertical Info Grid */
+    .info-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .info-item {
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #2d7a4f;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.6s ease-out;
+        animation-fill-mode: both;
+    }
+
+    .info-item:nth-child(1) { animation-delay: 0.1s; }
+    .info-item:nth-child(2) { animation-delay: 0.15s; }
+    .info-item:nth-child(4) { animation-delay: 0.25s; }
+    .info-item:nth-child(5) { animation-delay: 0.3s; }
+    .info-item:nth-child(6) { animation-delay: 0.35s; }
+    .info-item:nth-child(7) { animation-delay: 0.4s; }
+
+    .trip-type-container {
+        animation: fadeInUp 0.6s ease-out 0.2s both;
+    }
+
+    .price-value {
+        font-size: 28px;
+        color: #2d7a4f;
+        font-weight: 700;
+    }
+
+    .info-item:hover {
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(45, 122, 79, 0.15);
+        transform: translateX(5px);
+        border-left-color: #3a9d63;
+    }
+
+    .info-label {
+        font-size: 12px;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .info-value {
+        font-size: 18px;
+        color: #333;
+        font-weight: 700;
+    }
+
+    .trip-type-badge {
+        display: inline-block;
+        padding: 8px 20px;
+        background: linear-gradient(135deg, #3fa067 0%, #1a5c36ff 100%);
+        color: white;
+        border-radius: 25px;
+        font-weight: 700;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 3px 10px rgba(255, 130, 0, 0.3);
+        border: 3px solid #fff;
+        outline: 2px solid #3fa067;
+    }
+
+    .trip-type-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 25px 20px;
+        background: linear-gradient(135deg, #fff9f0 0%, #ffffff 100%);
+        border-radius: 10px;
+        border-left: 5px solid #3fa067;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 12px rgba(255, 130, 0, 0.1);
+    }
+
+    .trip-type-icon {
+        font-size: 24px;
+        color: #3fa067;
+    }
+
+    .trip-type-label {
+        font-size: 13px;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .trip-type-content {
+        flex: 1;
+    }
+
+    .route-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 25px;
+        background: linear-gradient(135deg, #e8f4f8 0%, #d4e8f0 100%);
+        border-radius: 12px;
+        margin-bottom: 25px;
+        animation: fadeIn 0.8s ease-out;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .route-section::before {
+        content: '🚛';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 40px;
+        opacity: 0.1;
+        animation: moveTruck 3s ease-in-out infinite;
+    }
+
+    .location {
+        flex: 1;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .location-label {
+        color: #666;
+        font-size: 12px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    .location-value {
+        color: #333;
+        font-size: 20px;
+        font-weight: 700;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .route-arrow {
+        color: #2d7a4f;
+        font-size: 28px;
+        margin: 0 20px;
+        animation: pulse 2s ease-in-out infinite;
+        position: relative;
+        z-index: 1;
+    }
+
+    .note-section {
+        padding: 20px;
+        background: linear-gradient(135deg, #fff9e6 0%, #fffef0 100%);
+        border-left: 5px solid #ffc107;
+        border-radius: 10px;
+        animation: fadeInUp 0.8s ease-out 0.5s both;
+        box-shadow: 0 2px 12px rgba(255, 193, 7, 0.15);
+        transition: transform 0.3s ease;
+        margin-top: 20px;
+    }
+
+    .note-section:hover {
+        transform: translateX(5px);
+    }
+
+    .note-label {
+        color: #666;
+        font-size: 12px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    .note-text {
+        color: #333;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .no-result {
+        text-align: center;
+        padding: 50px;
+        color: #999;
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .no-result-icon {
+        font-size: 64px;
+        margin-bottom: 20px;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    .no-result h3 {
+        color: #666;
+        margin-bottom: 15px;
+        font-size: 22px;
+    }
+
+    .no-result p {
+        color: #999;
+        line-height: 1.6;
+    }
+
+    .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255,255,255,.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+    }
+
+    /* Particles effect */
+    .particle {
+        position: fixed;
+        width: 4px;
+        height: 4px;
+        background: radial-gradient(circle, #2d7a4f, transparent);
+        border-radius: 50%;
+        pointer-events: none;
+        opacity: 0;
+        animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            opacity: 0;
+            transform: translateY(0) translateX(0);
+        }
+        50% {
+            opacity: 0.6;
+        }
+        100% {
+            transform: translateY(-100vh) translateX(50px);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+
+        .header {
+            padding: 0 15px;
+        }
+
+        .search-section {
+            padding: 25px 20px;
+        }
+
+        .result-section {
+            padding: 25px 20px;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+
+        .description {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .search-form {
+            flex-direction: column;
+        }
+
+        .search-form > div {
+            min-width: 100%;
+        }
+
+        .search-button {
+            width: 100%;
+        }
+
+        .route-section {
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px 15px;
+        }
+
+        .route-arrow {
+            transform: rotate(90deg);
+            margin: 10px 0;
+        }
+
+        .details-grid {
+            gap: 15px;
+        }
+
+        .info-item {
+            padding: 15px;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+        }
+
+        .logo-text {
+            font-size: 26px;
+        }
+
+        .location-value {
+            font-size: 16px;
+        }
+
+        .result-header h2 {
+            font-size: 20px;
+        }
+    }
+
+    /* Tooltip effect */
+    [data-tooltip] {
+        position: relative;
+        cursor: help;
+    }
+
+    [data-tooltip]::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-8px);
+        padding: 8px 12px;
+        background: rgba(0,0,0,0.9);
+        color: white;
+        font-size: 12px;
+        border-radius: 6px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s, transform 0.3s;
+    }
+
+    [data-tooltip]:hover::after {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-12px);
+    }
+</style>
+{% endblock style %}
+
+{% block content %}
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <span class="logo-text">OD</span>
+        </div>
+        <h1>Old Dominion Freight Line Tracking</h1>
+        <p class="description">
+            Old Dominion Freight Line is a leading LTL carrier in the US. Use this portal to track your shipments in real-time with our advanced tracking system.
+        </p>
+        <p class="contact-info">
+            ☎ +1-800-432-6335 | 🌐 <a href="https://www.odfl.com/Portal2/" target="_blank">https://www.odfl.com/Portal2/</a>
+        </p>
+    </div>
+
+    <div class="search-section">
+        <form method="GET" action="" class="search-form" id="trackingForm">
+            <div style="flex: 1;">
+                <label class="search-label">Enter your tracking number</label>
+                <input 
+                    type="text" 
+                    name="tracking_id" 
+                    class="search-input" 
+                    placeholder="e.g., WLG20220158"
+                    value="{{ request.GET.tracking_id|default:'' }}"
+                    required
+                    autocomplete="off"
+                >
+            </div>
+            <button type="submit" class="search-button">
+                <span>Track Shipment</span>
+            </button>
+        </form>
+    </div>
+
+    {% if request.GET.tracking_id %}
+        {% if shipment %}
+            <div class="result-section">
+                <div class="result-header">
+                    <h2>✓ Shipment Found</h2>
+                    <p class="tracking-number">Tracking ID: <strong>{{ shipment.tracking_id }}</strong></p>
+                </div>
+
+                <div class="section-title">🚚 Shipment Information</div>
+                <div class="info-grid">
+                       <!-- Trip Type -->
+                    <div class="trip-type-container">
+                        <div class="trip-type-icon"></div>
+                        <div class="trip-type-content">
+                            <div class="trip-type-label">Trip Type</div>
+                            <span class="trip-type-badge">Round Trip</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📍 Origin</div>
+                        <div class="info-value">{{ shipment.origin|default:"Not specified" | linebreaksbr }}</div>
+                    </div>
+                    <!-- <div class="info-item">
+                        <div class="info-label">🎯 Destination</div>
+                        <div class="info-value">{{ shipment.destination | linebreaksbr }}</div>
+                    </div> -->
+                    
+                 
+                    
+                    <div class="info-item">
+                        <div class="info-label">🚛 Trailer </div>
+                        <div class="info-value">{{ shipment.trailer }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🗺️ Total Miles</div>
+                        <div class="info-value">{{ shipment.trip }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">⚖️ Weight</div>
+                        <div class="info-value">{{ shipment.weight }} lbs</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">💰 Total Price</div>
+                        <div class="price-value">${{ shipment.price }}</div>
+                    </div>
+                </div>
+
+                {% if shipment.note %}
+                    <div class="note-section">
+                        <div class="note-label">📝 Additional Notes</div>
+                        <div class="note-text">{{ shipment.note }}</div>
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="result-section">
+                <div class="no-result">
+                    <div class="no-result-icon">📦</div>
+                    <h3>No Shipment Found</h3>
+                    <p>We couldn't find any shipment with tracking ID: <strong>{{ request.GET.tracking_id }}</strong></p>
+                    <p style="margin-top: 15px; font-size: 14px;">Please verify the tracking number and try again.</p>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+
+<script>
+    // Add floating particles effect
+    function createParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 4 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        document.body.appendChild(particle);
+        
+        setTimeout(() => {
+            particle.remove();
+        }, 7000);
+    }
+
+    // Create particles periodically
+    setInterval(createParticle, 2000);
+
+    // Add ripple effect on button click
+    document.querySelectorAll('.search-button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        });
+    });
+
+    // Auto-uppercase tracking ID input
+    const trackingInput = document.querySelector('input[name="tracking_id"]');
+    if (trackingInput) {
+        trackingInput.addEventListener('input', function(e) {
+            this.value = this.value.toUpperCase();
+        });
+    }
+</script>
+{% endblock content %}

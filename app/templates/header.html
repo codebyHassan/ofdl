@@ -1,0 +1,163 @@
+<!-- Desktop Navbar -->
+{% load static %}
+<nav class="navbar-desktop" id="desktopNavbar">
+  <a href="{% url 'home' %}" style="text-decoration: none" class="text-white">
+    <div class="navbar-brand">
+      <img src="{% static 'images/main-logo.png' %}" alt="Logo" />
+      <small>Helping The World <br />Keep Promises®</small>
+    </div>
+  </a>
+
+  <div class="middle">
+    <div class="track-box">
+      <!-- Search form pointing to track_shipment view -->
+      <form
+        method="GET"
+        action="{% url 'track_shipment' %}"
+        style="display: flex; align-items: center; width: 100%"
+      >
+        <span class="input-group-text bg-white text-success border-0">Track</span>
+        <input
+          type="text"
+          name="tracking_id"
+          placeholder="Enter Pro Number"
+          required
+        />
+        <button
+          type="submit"
+          style="background: none; border: none; cursor: pointer"
+        >
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
+    </div>
+
+    <div class="nav-links">
+      <!-- Services Dropdown -->
+      <div class="nav-item dropdown">
+        <a href="{% url 'demo' %}" class="nav-link">Services <i class="bi bi-chevron-down"></i></a>
+        <div class="dropdown-menu">
+          <a href="{% url 'demo' %}">Freight Shipping</a>
+          <a href="{% url 'demo' %}">Logistics Solutions</a>
+          <a href="{% url 'demo' %}">Warehousing</a>
+          <a href="{% url 'demo' %}">Supply Chain</a>
+        </div>
+      </div>
+
+      <!-- Tools Dropdown -->
+      <div class="nav-item dropdown">
+        <a href="{% url 'demo' %}" class="nav-link">Tools <i class="bi bi-chevron-down"></i></a>
+        <div class="dropdown-menu">
+          <a href="{% url 'demo' %}">Rate Quote</a>
+          <a href="{% url 'demo' %}">Transit Times</a>
+          <a href="{% url 'demo' %}">Pickup Request</a>
+          <a href="{% url 'demo' %}">Bill of Lading</a>
+        </div>
+      </div>
+
+      <!-- Resources Dropdown -->
+      <div class="nav-item dropdown">
+        <a href="{% url 'demo' %}" class="nav-link">Resources <i class="bi bi-chevron-down"></i></a>
+        <div class="dropdown-menu">
+          <a href="{% url 'demo' %}">Documentation</a>
+          <a href="{% url 'demo' %}">FAQs</a>
+          <a href="{% url 'demo' %}">Shipping Guidelines</a>
+          <a href="{% url 'demo' %}">News & Updates</a>
+        </div>
+      </div>
+
+      <a href="{% url 'demo' %}" class="nav-link">About</a>
+      <a href="{% url 'demo' %}" class="nav-link">Careers</a>
+      <a href="{% url 'demo' %}#contact" class="nav-link">Contact</a>
+    </div>
+  </div>
+
+  <div class="right-buttons">
+    <a href="{% url 'track_shipment' %}" class="btn btn-login">Login</a>
+    <a href="{% url 'track_shipment' %}" class="btn btn-signup">Sign Up</a>
+    <a href="{% url 'track_shipment' %}" class="search-icon-btn"><i class="bi bi-search"></i></a>
+  </div>
+</nav>
+
+<!-- Mobile Navbar -->
+<div class="navbar-mobile">
+  <a href="{% url 'home' %}" style="text-decoration: none" class="text-white">
+    <div class="d-flex align-items-center">
+      <img src="{% static 'images/main-logo.png' %}" alt="Logo" />
+      <span>Helping The World<br />Keep Promises®</span>
+    </div>
+  </a>
+  <button class="menu-toggle" id="menuToggle">
+    <i class="bi bi-list"></i>
+  </button>
+</div>
+
+<!-- Side Menu -->
+<div class="side-menu" id="sideMenu">
+  <button class="close-btn" id="closeMenu">
+    <i class="bi bi-x-lg"></i> Close
+  </button>
+
+  <div class="auth-buttons">
+    <a href="{% url 'track_shipment' %}" class="btn btn-login">Login</a>
+    <a href="{% url 'track_shipment' %}" class="btn btn-signup">Sign Up</a>
+  </div>
+
+  <div class="track-box-mobile">
+    <!-- Mobile search form -->
+    <form
+      method="GET"
+      action="{% url 'track_shipment' %}"
+      style="display: flex; align-items: center; width: 100%"
+    >
+      <span class="input-group-text bg-white text-success border-0">Track</span>
+      <input
+        type="text"
+        name="tracking_id"
+        placeholder="Enter Pro Number"
+        required
+      />
+      <button
+        type="submit"
+        style="background: none; border: none; cursor: pointer"
+      >
+        <i class="bi bi-search"></i>
+      </button>
+    </form>
+  </div>
+
+  <!-- Mobile Menu Items -->
+  <div class="menu-section">
+    <h6 class="menu-toggle-item">Services <i class="bi bi-chevron-down"></i></h6>
+    <div class="submenu">
+      <a href="#">Freight Shipping</a>
+      <a href="#">Logistics Solutions</a>
+      <a href="#">Warehousing</a>
+      <a href="#">Supply Chain</a>
+    </div>
+  </div>
+
+  <div class="menu-section">
+    <h6 class="menu-toggle-item">Tools <i class="bi bi-chevron-down"></i></h6>
+    <div class="submenu">
+      <a href="#">Rate Quote</a>
+      <a href="#">Transit Times</a>
+      <a href="#">Pickup Request</a>
+      <a href="#">Bill of Lading</a>
+    </div>
+  </div>
+
+  <div class="menu-section">
+    <h6 class="menu-toggle-item">Resources <i class="bi bi-chevron-down"></i></h6>
+    <div class="submenu">
+      <a href="#">Documentation</a>
+      <a href="#">FAQs</a>
+      <a href="#">Shipping Guidelines</a>
+      <a href="#">News & Updates</a>
+    </div>
+  </div>
+
+  <div class="menu-section"><a href="#" class="menu-link">About</a></div>
+  <div class="menu-section"><a href="#" class="menu-link">Careers</a></div>
+  <div class="menu-section"><a href="#" class="menu-link">Contact</a></div>
+</div>

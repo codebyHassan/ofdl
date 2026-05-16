@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}LTF Freight Shiping & Logistic Services | ODFL {% endblock %}
+{% block content %}
+
+<!-- Responsive Video -->
+<div class="video-wrapper">
+    <video preload="metadata" autoplay muted loop playsinline class="hero-video">
+        <source src="{% static 'images/main.mp4' %}" type="video/mp4" />
+    </video>
+</div>
+
+<div class="container mt-5">
+  <h1 class="text-success">Why Old Dominion? Our commitment to you.</h1>
+  <p>
+    At OD, we lead the LTL category by doing things the right way. We
+    continually invest in our people and improve our technology to ensure we can
+    meet your every business need. That’s why, for 16 years running, shippers
+    have named us their #1 National LTL Carrier for Quality.
+  </p>
+</div>
+
+<!-- Responsive Center Image -->
+<div class="text-center my-4">
+  <img src="{% static 'images/second.jpeg'%}" class="img-fluid rounded shadow-sm" />
+</div>
+
+
+<div class="container mt-5">
+  <h1 class="text-success">Shipping Services Overview</h1>
+  <p>
+    From Standard to Expedited LTL and everything in between, we offer a range
+    of freight transportation services across the US, Canada, Mexico, and beyond.
+  </p>
+</div>
+
+<!-- ✅ Responsive Scrollable Table -->
+<div class="container my-5 table-responsive">
+    <table class="table table-bordered align-middle text-center">
+        <thead class="table-success">
+            <tr>
+                <th>Features</th>
+                <th>Standard LTL</th>
+                <th>Expedited LTL</th>
+                <th>Global North America</th>
+                <th>International Freight</th>
+                <th>Truckload</th>
+                <th>Trade Show</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Basic LTL Shipment</td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td></td><td></td><td></td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+            </tr>
+            <tr>
+                <td>Custom Account Pricing Available</td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Spot Volume / Full Pup Load Rates</td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Service to/from Canada & Mexico</td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td></td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>High Priority / Time-Specific Transit Needs</td>
+                <td></td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td></td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+            </tr>
+            <tr>
+                <td>Container Service (Hawaii, Alaska, Puerto Rico)</td>
+                <td></td><td></td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Ocean and Air Imports / Exports</td>
+                <td></td><td></td><td></td>
+                <td><i class="fa-solid fa-check check-icon"></i></td>
+                <td></td><td></td>
+            </tr>
+            <tr>
+                <td>Truckload, Flatbed or Temp-Controlled Equipment</td>
+                <td></td><td></td><td></td><td></td>
+                <td><i class="fa-solid fa-check check-icon"></i></td><td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button class="start-btn">Get Started</button></td>
+                <td><button class="start-btn">Get Started</button></td>
+                <td><button class="start-btn">Get Started</button></td>
+                <td><button class="start-btn">Get Started</button></td>
+                <td><button class="start-btn">Get Started</button></td>
+                <td><button class="start-btn">Get Started</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- CONTENT SECTIONS -->
+<div class="container my-5">
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <img src="{% static 'images/White_Paper_Cover_600x522_4.webp' %}" class="img-fluid shadow-sm rounded">
+        </div>
+        <div class="col-md-6 d-flex flex-column justify-content-center">
+            <h6 class="text-success">WHITEPAPER</h6>
+            <h3>How Data Analytics Is Reshaping Shipping</h3>
+            <p>Carriers are using real-time data, automation & analytics to improve service.</p>
+            <a class="btn btn-outline-success" href="{%url 'demo' %}">Read More</a>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-6 d-flex flex-column justify-content-center">
+            <h6 class="text-success">RESOURCE CENTER</h6>
+            <h3>Trust the Trade Show Experts</h3>
+            <p>Reliable and on-time shipping for your booth & event materials.</p>
+            <a class="btn btn-outline-success" href="{%url 'demo' %}">Read More</a>
+        </div>
+        <div class="col-md-6">
+            <img src="{% static 'images/Trade_Show_Freight_Customer_Dock_600x338.webp' %}" class="img-fluid shadow-sm rounded">
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-6 mb-3">
+            <div class="p-4 border rounded shadow-sm">
+                <h6 class="text-success">FREIGHT TOOLS</h6>
+                <h4>Freight Shipping Knowledge</h4>
+                <p>Packaging, transit times, quotes & more.</p>
+                <a href="{%url 'demo' %}" class="btn btn-outline-success">Learn More</a>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="p-4 border rounded shadow-sm">
+                <h6 class="text-success">ACCOUNT</h6>
+                <h4>Create an Account</h4>
+                <p>Track shipments and manage preferences.</p>
+                <a href="{%url 'demo' %}" class="btn btn-outline-success">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center py-5">
+        <h3>Sign Up for OD’s Monthly Newsletter</h3>
+        <p class="mb-3">Industry insights and updates.</p>
+        <a class="btn btn-success px-4" href="{% url 'demo' %}">Sign Up</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const sideMenu = document.getElementById("sideMenu");
+const closeMenu = document.getElementById("closeMenu");
+
+menuToggle?.addEventListener("click", () => sideMenu.classList.add("open"));
+closeMenu?.addEventListener("click", () => sideMenu.classList.remove("open"));
+
+</script>
+{% endblock %}
+
+{% block style %}
+.hero-video {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+.table-responsive {
+    overflow-x: auto;
+}
+.check-icon {
+    color: #17603e;
+    font-size: 20px;
+}
+.start-btn {
+    background: #17603e;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+.start-btn:hover { opacity: .9; cursor: pointer; }
+.text-success { color: #17603e !important; }
+.btn-success { background: #17603e; border: none; }
+.btn-outline-success { border-color: #17603e; color: #17603e; }
+.btn-outline-success:hover { background:#17603e; color:#fff; }
+
+@media (max-width: 768px) {
+  .hero-video {
+      
+  }
+}
+{% endblock %}
+
+
